@@ -15,7 +15,7 @@ def capture_grid():
         raise Exception("Can't find grid")
 
     resized = resize_grid(img=img, quad=quad)
-    return resized, quad
+    return resized
 
 def debug_capture_grid():
     # region = manual_grid_select()
@@ -37,3 +37,4 @@ def debug_capture_grid():
 
     resized = resize_grid(img=img, quad=quad)
     show("Resized grid", resized, scale=0.7)
+    return resized
