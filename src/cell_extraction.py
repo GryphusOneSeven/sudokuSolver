@@ -41,7 +41,13 @@ def preprocess_cells(cells):
 
 
 def extract_cells_from_grid(grid):
+    cells = extract_cells(grid)
+    clean_cells = preprocess_cells(cells)
+    clean_cells = np.array(clean_cells)
 
+    return clean_cells
+
+def debug_extract_cells_from_grid(grid):
     show("Grid", grid, scale=0.7)
 
     cells = extract_cells(grid)
