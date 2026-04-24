@@ -63,20 +63,10 @@ def extract_cells_from_grid(grid):
 
     return clean_cells
 
-def debug_extract_cells_from_grid(grid):
-    show("Grid", grid, scale=0.7)
-
-    cells = extract_cells(grid)
-    clean_cells = preprocess_cells(cells)
-
-    show_cells_grid(clean_cells)
-
-    return clean_cells
-
 def extract_cells_from_grid_inv(grid):
     cells = extract_cells(grid)
     clean_cells = preprocess_cells_inv(cells)
-    clean_cells = np.array(cells)
+    clean_cells = np.array(clean_cells)
 
     return clean_cells
 
@@ -89,15 +79,15 @@ def save_sudoku_dataset(cells, output_dir="dataset"):
 
     for cell in cells:
         # afficher la cellule
-        cv2.imshow("Cellule", cell)
+        cv2.imshow("Cell", cell)
         cv2.waitKey(1)
 
         # demander le label
-        label = input("Quel chiffre ? (0 si vide) : ")
+        label = input("Choose number (0 if empty) : ")
 
         # vérifier que c'est un chiffre
         if label not in "0123456789":
-            print("Label invalide, ignoré.")
+            print("Invalid number")
             continue
 
         # sauvegarder l'image
@@ -106,3 +96,13 @@ def save_sudoku_dataset(cells, output_dir="dataset"):
         counter += 1
 
     cv2.destroyAllWindows()
+
+def debug_extract_cells_from_grid(grid):
+    show("Grid", grid, scale=0.7)
+
+    cells = extract_cells(grid)
+    clean_cells = preprocess_cells(cells)
+
+    show_cells_grid(clean_cells)
+
+    return clean_cells
