@@ -62,9 +62,5 @@ def train_from_folder():
     model.fit(train_gen, validation_data=val_gen, epochs=10)
     model.save("model/digit_cnn_sudoku.keras")
 
-
-
-
-
 if __name__ == "__main__":
     train_from_folder()

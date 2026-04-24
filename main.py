@@ -14,7 +14,7 @@ def main_pipeline():
     
     quad, grid = capture_grid()
     cells = extract_cells_from_grid(grid)
-    # save_dataset(cells)
+    # save_sudoku_dataset(cells)
 
     # sudoku_grid = recognize_with_tesseract(cells)
 
