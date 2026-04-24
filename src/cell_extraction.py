@@ -31,6 +31,19 @@ def clean_cell(cell):
     thresh = cv2.adaptiveThreshold(
         blur, 255,
         cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
+        cv2.THRESH_BINARY,
+        11, 2
+    )
+
+    return thresh
+
+def clean_cell_binary_inv(cell):
+    gray = cv2.cvtColor(cell, cv2.COLOR_BGR2GRAY)
+    blur = cv2.GaussianBlur(gray, (3, 3), 0)
+
+    thresh = cv2.adaptiveThreshold(
+        blur, 255,
+        cv2.ADAPTIVE_THRESH_GAUSSIAN_C,
         cv2.THRESH_BINARY_INV,
         11, 2
     )
@@ -40,6 +53,8 @@ def clean_cell(cell):
 def preprocess_cells(cells):
     return [clean_cell(c) for c in cells]
 
+def preprocess_cells_inv(cells):
+    return [clean_cell_binary_inv(c) for c in cells]
 
 def extract_cells_from_grid(grid):
     cells = extract_cells(grid)
@@ -55,6 +70,13 @@ def debug_extract_cells_from_grid(grid):
     clean_cells = preprocess_cells(cells)
 
     show_cells_grid(clean_cells)
+
+    return clean_cells
+
+def extract_cells_from_grid_inv(grid):
+    cells = extract_cells(grid)
+    clean_cells = preprocess_cells_inv(cells)
+    clean_cells = np.array(cells)
 
     return clean_cells
 
