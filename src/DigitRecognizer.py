@@ -5,6 +5,9 @@ import tensorflow as tf
 class DigitRecognizer:
     def __init__(self, model_path="model/digit_cnn_sudoku.keras"):
         self.model = tf.keras.models.load_model(model_path)
+        if self.model is None:
+            print("Can't find model, please train at least once")
+            exit(1)
 
     def preprocess(self, img):
         # img = cellule binaire
@@ -22,13 +25,10 @@ class DigitRecognizer:
 
 
     def predict(self, img):
-
         if self.is_empty_cell(img):
-            print("empty cell")
             return 0
 
         x = self.preprocess(img)
         x = np.expand_dims(x, axis=0)
         probs = self.model.predict(x, verbose=0)[0]
-        print(int(np.argmax(probs)))
         return int(np.argmax(probs))

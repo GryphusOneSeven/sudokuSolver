@@ -51,11 +51,11 @@ def recognize_with_tesseract(cells):
     digits = []
 
     for cell in cells:
-        debug_tesseract(cell)
+        # debug_tesseract(cell)
         digit = tesseract_digit(cell)
         digits.append(digit)
 
-    return np.array(digits).reshape((9, 9))
+    return digits
 
 def debug_tesseract(cell):
     prep = prepare_for_tesseract(cell)

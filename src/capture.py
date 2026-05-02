@@ -18,9 +18,6 @@ def capture_grid():
     return quad, resized
 
 def debug_capture_grid():
-    # region = manual_grid_select()
-    # screenshot = pyautogui.screenshot(region=region)
-
     screenshot = pyautogui.screenshot()
     img = cv2.cvtColor(np.array(screenshot), cv2.COLOR_RGB2BGR)
     show("Base img", img, scale=0.7)
