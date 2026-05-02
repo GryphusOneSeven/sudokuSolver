@@ -1,10 +1,9 @@
 from src.capture import capture_grid, debug_capture_grid
 from src.cell_extraction import extract_cells_from_grid, debug_extract_cells_from_grid, save_sudoku_dataset, extract_cells_from_grid_inv
-from src.binding import bind_cells
 from src.solver import solve_sudoku
 from src.interact import get_cells_to_fill, fill_on_sudoku_com, quad_to_region
 from src.tesseract_module import recognize_with_tesseract
-from src.train_cnn import train_and_save
+from src.train_cnn import train_MNIST, train_from_folder
 from src.DigitRecognizer import DigitRecognizer
 from src.TemplateMatcher import TemplateMatcher
 import numpy as np
@@ -28,14 +27,12 @@ def main_pipeline():
     if choice == "1":
         cells = extract_cells_from_grid_inv(grid)
         digits = recognize_with_tesseract(cells)
-        print("SAH 1")
         return 1
 
     elif choice == "2":
         cells = extract_cells_from_grid(grid)
         matcher = TemplateMatcher()
         digits = [matcher.predict(c) for c in cells]
-        print("SAH 2")
         return 1
 
     elif choice == "3":
@@ -44,8 +41,17 @@ def main_pipeline():
         digits = [recognizer.predict(c) for c in cells]
 
     elif choice == "4":
-        cells = extract_cells_from_grid_inv(grid)
-        save_sudoku_dataset(cells)
+        print("Choose TYPE :")
+        print("1 - Sudoku grid")
+        print("2 - MNIST")
+        type = input("> ")
+
+        if type == "1":
+            cells = extract_cells_from_grid_inv(grid)
+            save_sudoku_dataset(cells)
+            train_from_folder()
+        elif type == "2":
+            train_MNIST()
         return 0
 
     else:
@@ -60,11 +66,18 @@ def main_pipeline():
     solve_sudoku(sudoku_grid)
 
     if np.array_equal(og_grid, sudoku_grid):
-        print("cant solve sudoku")
+        print("Cannot solve Sudoku")
         return 1
 
-    cells_to_fill = get_cells_to_fill(og_grid, sudoku_grid)
-    fill_on_sudoku_com(cells_to_fill, quad_to_region(quad))
+    print("Fill cells on Sudoku ?")
+    print("1 - Yes")
+    print("2 - No")
+
+    fill = input("> ")
+    if fill == "1":
+        cells_to_fill = get_cells_to_fill(og_grid, sudoku_grid)
+        fill_on_sudoku_com(cells_to_fill, quad_to_region(quad))
+
     
 
 if __name__ == "__main__":
