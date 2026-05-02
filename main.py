@@ -27,13 +27,11 @@ def main_pipeline():
     if choice == "1":
         cells = extract_cells_from_grid_inv(grid)
         digits = recognize_with_tesseract(cells)
-        return 1
 
     elif choice == "2":
         cells = extract_cells_from_grid(grid)
         matcher = TemplateMatcher()
         digits = [matcher.predict(c) for c in cells]
-        return 1
 
     elif choice == "3":
         cells = extract_cells_from_grid_inv(grid)
